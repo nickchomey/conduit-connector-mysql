@@ -17,6 +17,7 @@ package mysql
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"regexp"
 
@@ -173,6 +174,9 @@ func (s *Source) getAndFilterTables(ctx context.Context, db *sqlx.DB, database s
 
 	// Iterate through all the rules
 	for _, rule := range s.config.Tables {
+		//trim leading and trailing spaces from rule
+		rule = strings.TrimSpace(rule)
+
 		if rule == common.AllTablesWildcard {
 			for _, table := range tables {
 				includedTables[table] = true
